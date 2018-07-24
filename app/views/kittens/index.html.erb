@@ -1,1 +1,12 @@
-<p> I am a kitten index page</p>
+<h1>All kittens</h1>
+
+<%@kitten.each do |k|%>
+
+<h4>Name:</h4>  <%=k.name%>
+ <h4>Age:</h4> <%=k.age%>
+ <h4>Cuteness:</h4>  <%=k.cuteness%>
+  <h4>Softness:</h4> <%=k.softness%>
+  <br>
+  <br>
+
+<% end %>

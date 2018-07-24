@@ -2,22 +2,33 @@ class KittensController < ApplicationController
 
   def index
   @kitten = Kitten.all
+  respond_to do |format|
+  format.html
+  format.json { render json: @kitten }
   end
+end
 
   def new
    @kitten = Kitten.new
   end
 
 def create
-  if @kitten.new(kitten_params)
+  @kitten = Kitten.new(kitten_params)
+  if @kitten.save
+     flash[:success] = "Kitten has been created"
     redirect_to @kitten
   else
+    flash[:success] = "Kitten could not be saved"
     render 'new'
   end
 end
 
 def show
   @kitten = Kitten.find(params[:id])
+  respond_to do |format|
+  format.html
+  format.json { render json: @kitten }
+  end
 end
 
 
@@ -27,17 +38,21 @@ end
   end
 
   def update
-
+@kitten = Kitten.find(params[:id])
     if @kitten.update(kitten_params)
+       flash[:success] = "Kitten has been sucessfully updated"
 			redirect_to @kitten
 		else
+      flash[:success] = "Kitten could not be updated"
 			render 'edit'
-	   end
+	  end
 
   end
 
   def destroy
+    @kitten = Kitten.find(params[:id])
     @kitten.destroy
+    flash[:success] = "Kitten was sucessfully deleted"
   		redirect_to root_path
   end
 
